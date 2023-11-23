@@ -1,5 +1,5 @@
-node_modules
-.env
-dotenv
-env
-data.json
+# node_modules
+# .env
+# dotenv
+# env
+# data.json
