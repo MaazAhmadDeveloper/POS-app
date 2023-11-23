@@ -9,25 +9,19 @@ If you are a total beginner and want to use this repository to Elevate your Skil
 
 1. Open VSCODE or any code editor of your choice.
 
-2. In the Terminal Run this command:
+2. In the Terminal on current directory Run this command:
 ```javascript=16
 git clone <url of the repository>
 ```
 3. Once the prject is in the Code Editor, Run:
 ```javascript=16
-npm install /npm i
+npm install && npm start 
 ```
-4. cd into Client folder and repeat step 3 and run:
+4. open a new terminal in which cd into client folder and repeat step again and keep in mind your local MongoDB should running before starting it
 ```javascript=16
-yarn start
-```
-5. Open another Terminal and in the root folder run:
-```javascript=16
-npm run server
+npm install && npm start 
 ```
  <br/>
- 6.Add your own ENV Config Files
-
 
 ## NB:
 Anyone can use to repository as they deem it Fit. I accept anyone to fork this repository and submit their own pull request.<br/>
