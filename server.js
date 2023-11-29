@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import productRouter from './routes/productsRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import billsRouter from './routes/billsRoutes.js';
+import categoriesRouter from './routes/categoriesRouter.js'; 
 //require('colors');
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(morgan("dev"));
 app.use('/api/products/', productRouter);
 app.use('/api/users/', userRouter);
 app.use('/api/bills/', billsRouter);
+app.use('/api/categories/', categoriesRouter);
 
 //Create Port 
 const PORT = process.env.PORT || 5000;

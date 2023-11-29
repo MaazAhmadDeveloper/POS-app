@@ -11,7 +11,8 @@ const Products = () => {
   const dispatch = useDispatch(); 
   const [productData, setProductData] = useState([]);
   const [fullproductData, setFullProductData] = useState([]);
-  const [searchInputValue, setSearchInputValue] = useState([]);
+  const [searchInputValue, setSearchInputValue] = useState([]); 
+  const [allCategories, setAllCategories] = useState([]); 
   const [popModal, setPopModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
@@ -35,9 +36,29 @@ const Products = () => {
       console.log(error);
     }
   };
+  const getAllCategories = async () => {
+    try {
+      dispatch({
+        type: "SHOW_LOADING",
+      });
+      const {data} = await axios.get('/api/categories/getCategories');
+      setAllCategories(data);
+      console.log(data);
+      dispatch({
+        type: "HIDE_LOADING",
+      });
+
+    } catch(error) {
+      dispatch({
+        type: "HIDE_LOADING",
+      });
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
       getAllProducts();
+      getAllCategories();
   }, []);
   useEffect(() => {
 
@@ -76,8 +97,12 @@ const Products = () => {
     {
         title: "Image",
         dataIndex: "image",
-        render:(image, record) => <img src={image} alt={record.name} height={60} width={60} />
+        render:(image, record) => <img src={image} alt={record.name} height={50} width={90} style={{borderRadius: 10}} />
     }, 
+    {
+      title: "Category",
+      dataIndex: "category",
+    },
     {
         title: "Price",
         dataIndex: "price",
@@ -95,7 +120,7 @@ const Products = () => {
   ]
 
   const handlerSubmit = async (value) => {
-    // console.log(value);
+    console.log(value);
     if(editProduct === null) {
       try {
         dispatch({
@@ -157,7 +182,7 @@ const Products = () => {
               value={searchInputValue}
               placeholder='Search Product' 
               />
-            <Button className='add-new' style={{position:"absolute", right: 0, zIndex: "1000", top: 15 }} onClick={() => setPopModal(true)}>Add New</Button>
+            <Button className='add-new' style={{position:"absolute", right: -50, zIndex: "1000", top: 15 }} onClick={() => setPopModal(true)}>Add New</Button>
       </div>
         
       <Table dataSource={productData} columns={columns} bordered />
@@ -169,13 +194,19 @@ const Products = () => {
             <FormItem name="name" label="Name">
               <Input/>
             </FormItem>
-            <Form.Item name="category" label="Category">
-              <Select >
-                <Select.Option value="Catagory-1">Catagory-1</Select.Option>
-                <Select.Option value="Catagory-2">Catagory-2</Select.Option>
-                <Select.Option value="Catagory-3">Catagory-3</Select.Option>
+            <FormItem name="category" label="Category">
+              <Select 
+                style={{ width: "100%"}}
+              >
+
+                {allCategories.map(categoryObj => (
+
+                <Select.Option value={categoryObj.category}>{categoryObj.category}</Select.Option>
+
+                ))}
+
               </Select>
-            </Form.Item>
+            </FormItem>
             <FormItem name="price" label="Price">
               <Input/>
             </FormItem>

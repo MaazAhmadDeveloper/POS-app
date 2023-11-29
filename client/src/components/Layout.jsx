@@ -7,7 +7,9 @@ import {
   AppstoreAddOutlined,
   MoneyCollectOutlined,
   LogoutOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  SnippetsOutlined,
+  BranchesOutlined
 } from '@ant-design/icons';
 import './layout.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -16,11 +18,11 @@ import Spinner from './Spinner';
 
 const { Header, Sider, Content } = Layout;
 
-const LayoutApp = ({children, categories}) => {
+const LayoutApp = ({children, headerInput}) => {
   const {cartItems, loading} = useSelector(state => state.rootReducer);
 
   const location = useLocation();
-  const { pathname } = location;
+  // const { pathname } = location;
 
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
@@ -47,12 +49,15 @@ const LayoutApp = ({children, categories}) => {
             <Menu.Item key="/products" icon={<AppstoreAddOutlined  />}>
                 <Link to="/products">Products</Link>
             </Menu.Item>
-            <Menu.Item key='/bills' icon={<MoneyCollectOutlined />}>
-                <Link to="/bills">Reports</Link>
+            <Menu.Item key="/categories" icon={<BranchesOutlined />}>
+                <Link to="/categories">Categories</Link>
             </Menu.Item>
-            {/* <Menu.Item key='/customers' icon={<UserSwitchOutlined />}>
-                <Link to="/customers">Customers</Link>
-            </Menu.Item> */}
+            <Menu.Item key='/invoice' icon={<MoneyCollectOutlined />}>
+                <Link to="/invoice">Invoices</Link>
+            </Menu.Item>
+            <Menu.Item key='/reports' icon={<SnippetsOutlined />}>
+                <Link to="/reports">Reports</Link>
+            </Menu.Item>
             <Menu.Item key='/logout' icon={<LogoutOutlined />} onClick={() => {localStorage.removeItem("auth"); navigate("/login");}}>
                 LogOut
             </Menu.Item>
@@ -60,27 +65,19 @@ const LayoutApp = ({children, categories}) => {
       </Sider>
       <Layout className="site-layout">
         <Header className="site-layout-background" style={{ padding: 0 }}>
+          
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
             className: 'trigger',
             onClick: toggle,
           })}
+
+        {headerInput}
+
           <div className="cart-items" onClick={() => navigate('/cart')}>
             <ShoppingCartOutlined />
             <span className="cart-badge">{cartItems.length}</span>
           </div>
         </Header>
-
-        { pathname === "/" && <Content
-                  className="site-layout-background"
-                  style={{
-                    margin: '10px 24px 0px 16px',
-                    height: "100px",
-                    borderRadius: 10,
-                    maxHeight: 80
-                  }}
-          >
-            {categories}
-        </Content>}
          
         <Content
           className="site-layout-background"

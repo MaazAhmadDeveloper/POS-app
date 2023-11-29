@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import Layout from '../../components/Layout'
 import Invoice from './Invoice';
 
-const Bills = () => {
+const InvoicesRoute = () => {
     const dispatch = useDispatch();
   const [billsData, setBillsData] = useState([]);
   const [fullBillsData, setFullBillsData] = useState([]);
@@ -109,7 +109,7 @@ const Bills = () => {
         dataIndex: "_id",
         render:(id, record) => 
         <div>
-          <EyeOutlined className='cart-edit eye' onClick={() => {setSelectedBill(record); setPopModal(true); console.log(record);}} />
+          <EyeOutlined className='cart-edit eye' onClick={() => {setSelectedBill(record); setPopModal(true);}} />
         </div>
         
     }
@@ -127,7 +127,8 @@ const Bills = () => {
               placeholder='Search Product' 
               />
                 <Select
-                  placeholder="Select a category"
+                  placeholder="Search Via"
+                  // defaultValue="Bill No."
                   style={{ width: 200, marginLeft: 100 }}
                   onChange={(value) => setSelectedCategory(value)}
                 >
@@ -153,4 +154,4 @@ const Bills = () => {
   )
 }
 
-export default Bills
+export default InvoicesRoute

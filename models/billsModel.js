@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 //for create table into db
 const billsSchema = new mongoose.Schema({
 
-    billNumber: { type: Number, required: true },
+    billNumber: { type: String, required: true },
     customerName: { type: String, required: true },
-    customerPhone: { type: Number, required: true },
+    customerPhone: { type: String, required: true },
     customerAddress: { type: String, required: true },
     subTotal: { type: Number, required: true },
     totalAmount: { type: Number, required: true },

@@ -21,6 +21,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .products-top{
+  position: relative;
   display: flex;
 }
 
@@ -180,14 +181,15 @@ body::-webkit-scrollbar-thumb {
 
 .searchInput{
   position: relative;
-  margin-left: auto;
-  margin-right: 50px;
+  width: 150vh;
 }
 
 .searchInput .searchInputHome{
   border: 1px solid #001e28;
   padding: 5px 20px;
   border-radius: 10px;
+  height: 40px;
+  width: 100%;
 }
 .searchInput .searchInputHome:focus{
   outline: none;
@@ -335,4 +337,50 @@ body::-webkit-scrollbar-thumb {
 
 .add-new{
   background-color: red;
+}
+
+.twoButtonsContainer{
+  display: flex;
+}
+
+.doubleArrow{
+  margin-left: auto;
+  z-index: 1500;
+}
+
+.options-container {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.options-container.visible {
+  transform: translateX(0); 
+  opacity: 1;
+}
+
+.options-container.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.cancel-category{
+  margin: 10px !important;
+  margin-left: auto !important;
+  border-radius: 5px !important;
+  transition: 0.5s !important;
+}
+
+.delete-category{
+  border-radius: 5px !important;
+  background-color: #001e28 !important;
+  margin: 10px !important;
+  color: white !important;
+  transition: 0.3s !important;
+}
+.delete-category:hover{
+  background-color: white !important;
+  color: black !important;
+}
+.report-select-div{
+  margin: 20px 20px 20px 0px;
 }

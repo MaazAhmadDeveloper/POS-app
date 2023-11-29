@@ -4,7 +4,7 @@ import LayoutApp from '../../components/Layout'
 import { Row, Col } from 'antd';
 import Product from '../../components/Product';
 import { useDispatch } from 'react-redux';
-import Catagories from './Catagories';
+import HeaderInput from './HeaderInput';
 
 const Home = () => {
 
@@ -15,14 +15,14 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchInput, setSearchInput] = useState("");
 
-  useEffect(() => {
+  useEffect(() => { 
     const getAllProducts = async () => {
         try {
           dispatch({
             type: "SHOW_LOADING",
           });
           const {data} = await axios.get('/api/products/getproducts');
-          console.log(data);
+          // console.log(data);
           setFullProductData(data);
           setProductData(data) 
 
@@ -48,28 +48,23 @@ const Home = () => {
 
 
   return (
-    <LayoutApp  categories={<Catagories
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                setSearchInput={setSearchInput}
-                searchInput={searchInput}
+    <LayoutApp  headerInput={<HeaderInput 
+                  searchInput={searchInput}
+                  setSearchInput={setSearchInput}
                 />}
     >
+
       <Row>
-        {
-          selectedCategory === "All" ?
-          productData.map((product) => (
+        
+      {productData.map((product) => (
             <Col xs={24} sm={6} md={12} lg={6}>
               <Product key={product.id} product={product} />
             </Col>
-          ))
-          :
-          productData.filter((i) => i.category === selectedCategory).map((product) => (
-          <Col xs={24} sm={6} md={12} lg={6}>
-            <Product key={product.id} product={product} />
-          </Col>
-        ))}
+      ))}
+
       </Row>
+
+      {/* {productData && <h1>There is no data in it</h1> } */}
     </LayoutApp>
   )
 }

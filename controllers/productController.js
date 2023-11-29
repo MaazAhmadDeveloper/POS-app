@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import mongoose from "mongoose";
 
 //for add or fetch
 export const getProductController = async (req, res) => {
@@ -45,12 +46,29 @@ export const updateProductController = async (req, res) => {
 
 //for delete
 export const deleteProductController = async (req, res) => {
-    try {
 
-        await Product.findOneAndDelete({_id: req.body.productId})
-        res.status(200).json("Product Deleted!");
-    } catch(error) {
-        res.status(400).send(error);
-        console.log(error);
+    if (Array.isArray(req.body.productsIdArray) ) {
+
+        // to delete all products by deleting one category 
+        try {
+
+            const objectIdsToDelete = req.body.productsIdArray.map(id => mongoose.Types.ObjectId(id));
+            console.log(objectIdsToDelete);
+            await Product.deleteMany({ _id: { $in: objectIdsToDelete } });
+        
+            res.status(200).json("All Products of one category Deleted!");
+          } catch (error) {
+            console.error("Error deleting documents:", error);
+          }
+    }else{
+
+        // to delete one product by products sections
+        try {
+            await Product.findOneAndDelete({_id: req.body.productId});
+            res.status(200).json("Product Deleted!");
+        } catch(error) {
+            res.status(400).send(error);
+            console.log(error);
+        }
     }
 }

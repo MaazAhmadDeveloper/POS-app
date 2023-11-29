@@ -6,8 +6,9 @@ import Products from './pages/products/Products';
 import Cart from './pages/cart/Cart';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import Bills from './pages/bills/Bills';
-import Customers from './pages/customers/Customers';
+import Reports from './pages/reports/Reports';
+import InvoicesRoute from './pages/invoices/InvoiceRoute';
+import Categories from "./pages/categories/Categories"
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={
             <ProtectedRouter>
-              <Home />
+              <Home /> 
             </ProtectedRouter>  
             } />
           <Route path="/products" element={
@@ -29,14 +30,19 @@ function App() {
               <Cart />
             </ProtectedRouter>
             } />
-            <Route path="/bills" element={
+            <Route path="/invoice" element={
             <ProtectedRouter>
-              <Bills />
+              <InvoicesRoute />
             </ProtectedRouter>
             } />
-            <Route path="/customers" element={
+            <Route path="/categories" element={
             <ProtectedRouter>
-              <Customers />
+              <Categories />
+            </ProtectedRouter>
+            } />
+            <Route path="/reports" element={
+            <ProtectedRouter>
+              <Reports />
             </ProtectedRouter>
             } />
           <Route path="/login" element={<Login />} />
