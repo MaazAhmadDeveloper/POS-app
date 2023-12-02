@@ -13,6 +13,7 @@ function Categories(  ) {
   const [getAllProducts, setGetAllProducts] = useState('All');
   const [popModal, setPopModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const dispatch = useDispatch();
 
   const getAllCategories = async () => {
@@ -101,51 +102,65 @@ function Categories(  ) {
     }
   }
 
+  const categoryClickHandle = (category)=>{
+    setSelectedCategory(category)
+  }
+
   return (
     <LayoutApp >
       
-      <div >
+    {selectedCategory === null ? 
+          <div >
         
-      <div className="products-top">
-      <h2 style={{margin:0}} >All Caregories </h2>
-      <Button className='add-new' style={{position:"absolute", right: 0, zIndex: "1000", }}  onClick={() => setPopModal(true)}>Add New</Button>
+          <div className="products-top">
+          <h2 style={{margin:0}} >All Caregories </h2>
+          <Button className='add-new' style={{position:"absolute", right: 0, zIndex: "1000", }}  onClick={() => setPopModal(true)}>Add New</Button>
+          </div>
+          <h3>Total Products: { getAllProducts.length } </h3>
+    
+      <div style={{marginTop: 30}}>
+          <Row>
+          {fullProductData.map((productObj)=> 
+                        <Col xs={24} sm={6} md={12} lg={6} >
+                        <Mappedcard 
+                          key={productObj.id} 
+                          productObj={productObj} 
+                          getAllCategories={getAllCategories}
+                          setEditProduct={setEditProduct}
+                          setPopModal={setPopModal}
+                          getAllProducts={getAllProducts}
+                          categoryClickHandle={categoryClickHandle}
+                          />
+                        </Col>
+          )}
+          </Row>
       </div>
-      <h3>Total Products: { getAllProducts.length } </h3>
+    
+      {
+            popModal && 
+            <Modal title={`${editProduct !== null ? "Edit Product" : "Add New Product"}`} visible={popModal} onCancel={() => {setEditProduct(null); setPopModal(false);}} footer={false}>
+              <Form layout='vertical' initialValues={editProduct} onFinish={handlerSubmit} >
+                <FormItem name="category" label="categories">
+                  <Input/>
+                </FormItem>
+                <FormItem name="image" label="Image URL">
+                  <Input/>
+                </FormItem>
+                <div className="form-btn-add">
+                  <Button htmlType='submit' className='add-new'>Add</Button>
+                </div>
+              </Form>
+            </Modal>
+          }
+          </div>
+    :  
+    <SelectedCategory 
+      setSelectedCategory={setSelectedCategory}
+      selectedCategory={selectedCategory}
 
-  <div style={{marginTop: 30}}>
-      <Row>
-      {fullProductData.map((productObj)=> 
-                    <Col xs={24} sm={6} md={12} lg={6}>
-                    <Mappedcard 
-                      key={productObj.id} 
-                      productObj={productObj} 
-                      getAllCategories={getAllCategories}
-                      setEditProduct={setEditProduct}
-                      setPopModal={setPopModal}
-                      getAllProducts={getAllProducts}
-                      />
-                  </Col>
-      )}
-      </Row>
-  </div>
+    />
+    }
 
-  {
-        popModal && 
-        <Modal title={`${editProduct !== null ? "Edit Product" : "Add New Product"}`} visible={popModal} onCancel={() => {setEditProduct(null); setPopModal(false);}} footer={false}>
-          <Form layout='vertical' initialValues={editProduct} onFinish={handlerSubmit} >
-            <FormItem name="category" label="categories">
-              <Input/>
-            </FormItem>
-            <FormItem name="image" label="Image URL">
-              <Input/>
-            </FormItem>
-            <div className="form-btn-add">
-              <Button htmlType='submit' className='add-new'>Add</Button>
-            </div>
-          </Form>
-        </Modal>
-      }
-      </div>
 
     </LayoutApp>
   )

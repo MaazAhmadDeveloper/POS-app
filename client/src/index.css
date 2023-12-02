@@ -26,6 +26,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .product-btn {
+  display: flex;
   margin-top: 25px;
   width: 100%;
 }
@@ -53,7 +54,8 @@ body::-webkit-scrollbar-thumb {
 
 .cart-items {
   position: relative;
-  margin-right: 25px;
+  margin-right: 10px;
+  margin-left: auto;
   cursor: pointer;
 }
 
@@ -159,10 +161,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .categoryBtn {
-  margin: 0 20px;
+  margin: 0 10px;
   border: none;
   height: 40px;
-  width: 150px;
+  padding: 3px 30px;
   border-radius: 20px;
   font-size: 18px;
   cursor: pointer;
@@ -181,7 +183,8 @@ body::-webkit-scrollbar-thumb {
 
 .searchInput{
   position: relative;
-  width: 150vh;
+  width: 140vh;
+  margin-left: 10px;
 }
 
 .searchInput .searchInputHome{
@@ -383,4 +386,71 @@ body::-webkit-scrollbar-thumb {
 }
 .report-select-div{
   margin: 20px 20px 20px 0px;
+}
+
+.categories-slide{
+  overflow-x: auto;
+  display: flex;
+}
+.categories-slide::-webkit-scrollbar {
+  display: none;
+}
+
+.product-data{
+  display: flex;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  align-items: center;
+}
+
+.product-data-container{
+  display: flex;
+  align-items: center;
+}
+.quantity-container{
+  margin-right: 9px;
+  user-select: none;
+  cursor: pointer; 
+}
+.goBack-btn{
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #001e28;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.5s;
+}
+.goBack-btn:hover{
+  background-color: #dfdede;
+  color: black;
+}
+.All-products-Categories-heading{
+  font-size: 20px;
+}
+.secret-key-input{
+  border: 1px solid rgb(146, 146, 146);
+  border-radius: 3px;
+  height: 30px;
+  width: 100%;
+  padding: 10px;
+
+}
+.secret-key-input:focus{
+  outline: none;
+}
+.logout-confirm{
+  border-radius: 5px !important;
+  background-color: #ff7f50 !important;
+  margin: 10px !important;
+  color: white !important;
+  transition: 0.3s !important;
+}
+.logout-confirm:hover{
+  background-color: white !important;
+  color: #ff7f50 !important;
 }

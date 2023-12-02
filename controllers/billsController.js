@@ -15,7 +15,7 @@ export const getBillsController = async (req, res) => {
 //for add
 export const addBillsController = async (req, res) => {
 
-    console.log(req.body);
+    // console.log(req.body);
         try {
             const newBills = new Bills(req.body);
             await newBills.save();
@@ -24,6 +24,4 @@ export const addBillsController = async (req, res) => {
         } catch(error) {
             console.log("error");
         }
-
-
 }

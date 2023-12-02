@@ -57,29 +57,33 @@ useEffect(() => {
           <div className="card" ref={componentRef}>
             <div className="cardHeader">
                 <h2 className="logo">MP POS</h2>
-                <span>Number: <b>+381/0000000</b></span>
-                <span>Address: <b>34000 ABCD, EFGH</b></span>
+                <span>Number: <b>+92300000000</b></span>
+                <span>Address: <b> ABCD, EFGH, IJKL</b></span>
             </div>
             <div className="cardBody">
                 <div className="group">
+                    <span>Bill Number:</span>
+                    <span><b>{selectedBill.billNumber}</b></span>
+                </div>
+                { selectedBill.customerName !== "-----" && <div className="group">
                     <span>Customer Name:</span>
                     <span><b>{selectedBill.customerName}</b></span>
-                </div>
-                <div className="group">
+                </div>}
+                { selectedBill.customerPhone !== "-----" &&<div className="group">
                     <span>Customer Phone:</span>
                     <span><b>{selectedBill.customerPhone}</b></span>
-                </div>
-                <div className="group">
+                </div>}
+                { selectedBill.customerAddress !== "-----" &&<div className="group">
                     <span>Customer Address:</span>
                     <span><b>{selectedBill.customerAddress}</b></span>
-                </div>
+                </div>}
                 <div className="group">
                     <span>Payment Method:</span>
                     <span><b>{selectedBill.paymentMethod}</b></span>
                 </div>
                 <div className="group">
                     <span>Date Order:</span>
-                    <span><b>{selectedBill.createdAt? selectedBill.createdAt.toString().substring(0, 10) : new Date().toISOString().split('T')[0]}</b></span>
+                    <span><b>{selectedBill.createdAt? new Date(selectedBill.createdAt).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}</b></span>
                 </div>
             </div>
             
@@ -88,8 +92,8 @@ useEffect(() => {
 
                 <div className="footerCardTotal">
                     <div className="group">
-                        <h3 >Tax:</h3>
-                        <h3><b className="total">+ Rs {selectedBill.tax}</b></h3>
+                        <h3 >Discount:</h3>
+                        <h3><b className="total">- Rs {selectedBill.discount}</b></h3>
                     </div>
                     <div className="group">
                         <h3 >Total:</h3>
@@ -106,35 +110,39 @@ useEffect(() => {
 
             </div>
             <div className="cardBody">
-                <div className="group">
+            <div className="group">
+                    <span>Bill Number:</span>
+                    <span><b>{selectedBill.billNumber}</b></span>
+                </div>
+            { selectedBill.customerName !== "-----" && <div className="group">
                     <span>Customer Name:</span>
                     <span><b>{selectedBill.customerName}</b></span>
-                </div>
-                <div className="group">
+                </div>}
+                { selectedBill.customerPhone !== "-----" &&<div className="group">
                     <span>Customer Phone:</span>
                     <span><b>{selectedBill.customerPhone}</b></span>
-                </div>
-                <div className="group">
+                </div>}
+                { selectedBill.customerAddress !== "-----" &&<div className="group">
                     <span>Customer Address:</span>
                     <span><b>{selectedBill.customerAddress}</b></span>
-                </div>
+                </div>}
                 <div className="group">
                     <span>Payment Method:</span>
                     <span><b>{selectedBill.paymentMethod}</b></span>
                 </div>
                 <div className="group">
                     <span>Date Order:</span>
-                    <span><b>{selectedBill.createdAt? selectedBill.createdAt.toString().substring(0, 10) : new Date().toISOString().split('T')[0]}</b></span>
+                    <span><b>{selectedBill.createdAt? new Date(selectedBill.createdAt).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })}</b></span>
                 </div>
             </div>
             
-                <h4 className="YourOrderText">His Order</h4>
+                <h4 className="YourOrderText">Order Number: {selectedBill.orderNumber}</h4>
             <Table columns={columns} dataSource={selectedBill.cartItems} pagination={false} size="small" />
 
                 <div className="footerCardTotal">
                     <div className="group">
-                        <h3 >Tax:</h3>
-                        <h3><b className="total">+ Rs {selectedBill.tax}</b></h3>
+                        <h3 >Discount:</h3>
+                        <h3><b className="total">- Rs {selectedBill.discount}</b></h3>
                     </div>
                     <div className="group">
                         <h3 >Total:</h3>

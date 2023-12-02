@@ -8,7 +8,7 @@ import Layout from '../../components/Layout'
 import Invoice from '../invoices/Invoice';
 
 const Reports = () => {
-  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+  const { toPDF, targetRef } = usePDF({filename: 'page.pdf',});
   const dispatch = useDispatch();
   const [billsData, setBillsData] = useState([]);
   const [fullBillsData, setFullBillsData] = useState([]);
@@ -72,7 +72,7 @@ const Reports = () => {
     {
         title: "Date",
         dataIndex: "createdAt",
-        render: ( date ) => date.toString().substring(0, 10)
+        render: ( date ) => new Date(date).toLocaleDateString('en-GB')
     },
     {
         title: "Customer Name",
@@ -92,8 +92,8 @@ const Reports = () => {
         dataIndex: "subTotal",
     },
     {
-        title: "Tax",
-        dataIndex: "tax",
+        title: "Discount",
+        dataIndex: "discount",
     },
     {
         title: "Total Amount",
@@ -107,6 +107,42 @@ const Reports = () => {
           <EyeOutlined className='cart-edit eye' onClick={() => {setSelectedBill(record); setPopModal(true); console.log(record);}} />
         </div>
         
+    }
+  ]
+  const columnsForDownload = [
+    {
+      title: "Bill N0.",
+      dataIndex: "billNumber"
+    },
+    {
+        title: "Date",
+        dataIndex: "createdAt",
+        render: ( date ) => new Date(date).toLocaleDateString('en-GB')
+    },
+    {
+        title: "Customer Name",
+        dataIndex: "customerName",
+    }, 
+    {
+        title: "Contact Number",
+        dataIndex: "customerPhone",
+    }
+    , 
+    {
+        title: "Customer Address",
+        dataIndex: "customerAddress",
+    },
+    {
+        title: "Sub Total",
+        dataIndex: "subTotal",
+    },
+    {
+        title: "Discount",
+        dataIndex: "discount",
+    },
+    {
+        title: "Total Amount",
+        dataIndex: "totalAmount",
     }
   ]
 
@@ -190,7 +226,7 @@ const Reports = () => {
                   })}
                 >
                 {fullBillsData.map(customer => {
-                    if (customer.customerName !== "(Unknown)" && !uniqueNamesSet.has(customer.customerName)) {
+                    if (customer.customerName !== "-----" && !uniqueNamesSet.has(customer.customerName)) {
                         uniqueNamesSet.add(customer.customerName);
                 return (
                     <Select.Option key={customer.customerName} value={customer.customerName}>
@@ -204,9 +240,9 @@ const Reports = () => {
               </Select>
       </div>
 
-
-      <Table dataSource={billsData} columns={columns} bordered ref={targetRef} pagination={false} size="small" />
-
+      <Table dataSource={billsData} columns={columns} bordered />
+      <Table style={{position: "absolute", left: "-9999px"}} dataSource={billsData} columns={columnsForDownload} bordered ref={targetRef} pagination={false} size="small" />
+      
       { 
         popModal 
           && <Invoice 
@@ -219,4 +255,4 @@ const Reports = () => {
   )
 }
 
-export default Reports
+export default Reports;

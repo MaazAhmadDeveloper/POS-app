@@ -15,17 +15,17 @@ import './layout.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Spinner from './Spinner';
+import Logout from '../pages/logout/Logout';
 
 const { Header, Sider, Content } = Layout;
 
-const LayoutApp = ({children, headerInput}) => {
+const LayoutApp = ({children, headerInput, categories}) => {
   const {cartItems, loading} = useSelector(state => state.rootReducer);
-
-  const location = useLocation();
-  // const { pathname } = location;
-
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { pathname } = location;
 
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -58,9 +58,6 @@ const LayoutApp = ({children, headerInput}) => {
             <Menu.Item key='/reports' icon={<SnippetsOutlined />}>
                 <Link to="/reports">Reports</Link>
             </Menu.Item>
-            <Menu.Item key='/logout' icon={<LogoutOutlined />} onClick={() => {localStorage.removeItem("auth"); navigate("/login");}}>
-                LogOut
-            </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -77,7 +74,23 @@ const LayoutApp = ({children, headerInput}) => {
             <ShoppingCartOutlined />
             <span className="cart-badge">{cartItems.length}</span>
           </div>
+          <Logout 
+              collapsed={collapsed}
+          />
+
         </Header>
+
+        { pathname === "/" && <Content
+                  className="site-layout-background"
+                  style={{
+                    margin: '10px 24px 0px 16px',
+                    height: "100px",
+                    borderRadius: 10,
+                    maxHeight: 80
+                  }}
+          >
+            {categories}
+        </Content>}
          
         <Content
           className="site-layout-background"

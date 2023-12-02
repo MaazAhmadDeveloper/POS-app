@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import Product from '../../components/Product';
 import { useDispatch } from 'react-redux';
 import HeaderInput from './HeaderInput';
+import SlidingCatagories from './slidingCatagories';
 
 const Home = () => {
 
@@ -52,19 +53,29 @@ const Home = () => {
                   searchInput={searchInput}
                   setSearchInput={setSearchInput}
                 />}
+                categories={<SlidingCatagories
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  />}
     >
 
       <Row>
         
-      {productData.map((product) => (
+      {
+        selectedCategory === "All" ?
+          productData.map((product) => (
             <Col xs={24} sm={6} md={12} lg={6}>
               <Product key={product.id} product={product} />
             </Col>
-      ))}
+          ))
+          :
+          productData.filter((i) => i.category === selectedCategory).map((product) => (
+              <Col xs={24} sm={6} md={12} lg={6}>
+                <Product key={product.id} product={product} />
+              </Col>
+        ))}
 
       </Row>
-
-      {/* {productData && <h1>There is no data in it</h1> } */}
     </LayoutApp>
   )
 }

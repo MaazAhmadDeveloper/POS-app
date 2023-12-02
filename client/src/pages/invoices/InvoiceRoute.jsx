@@ -53,7 +53,7 @@ const InvoicesRoute = () => {
         return setBillsData(fullBillsData.filter((obj) => (obj.customerName.toString().toLowerCase().includes(searchInputValue.toLowerCase()))));
     
       case "Date":
-        return setBillsData(fullBillsData.filter((obj) => (obj.createdAt.toString().substring(0, 10).toLowerCase().includes(searchInputValue.toLowerCase()))));
+        return setBillsData(fullBillsData.filter((obj) => (new Date(obj.createdAt).toLocaleDateString('en-GB').includes(searchInputValue.toLowerCase()))));
     
       case "Contact Number":
         return setBillsData(fullBillsData.filter((obj) => (obj.customerPhone.toString().includes(searchInputValue))));
@@ -77,7 +77,7 @@ const InvoicesRoute = () => {
     {
         title: "Date",
         dataIndex: "createdAt",
-        render: ( date ) => date.toString().substring(0, 10)
+        render: ( date ) => new Date(date).toLocaleDateString('en-GB')
     },
     {
         title: "Customer Name",
@@ -97,8 +97,8 @@ const InvoicesRoute = () => {
         dataIndex: "subTotal",
     },
     {
-        title: "Tax",
-        dataIndex: "tax",
+        title: "Discount",
+        dataIndex: "discount",
     },
     {
         title: "Total Amount",
@@ -124,7 +124,7 @@ const InvoicesRoute = () => {
               type="text" 
               onChange={ e => setSearchInputValue(e.target.value) }
               value={searchInputValue}
-              placeholder='Search Product' 
+              placeholder= {selectedCategory === "Date" ? "DD/MM/YYYY" :  'Search Product' }
               />
                 <Select
                   placeholder="Search Via"

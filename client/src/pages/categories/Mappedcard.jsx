@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Card, message, Modal, Button} from 'antd';  
 
 
-function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal, getAllProducts} ) {
+function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal, getAllProducts, categoryClickHandle} ) {
     const dispatch = useDispatch();
     const [isOptionsVisible, setIsOptionsVisible] = useState(false);
     const [deleteModelPopUp, setDeleteModelPopUp] = useState(false);
@@ -59,10 +59,10 @@ function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal,
     <Card
       hoverable
       style={{ width: 240, marginBottom: 30, borderRadius: "10px"}}
-      cover={<img alt={productObj.category} src={productObj.image} style={{height: 150, width: 230, margin: "auto", marginTop: "10px", borderRadius: "10px"}} />}
+      cover={<img alt={productObj.category} src={productObj.image} onClick={() => categoryClickHandle(productObj.category)} style={{height: 150, width: 230, margin: "auto", marginTop: "10px", borderRadius: "10px"}} />}
   >
 
-      <div style={{display: "flex"}}>
+      <div onClick={() => categoryClickHandle(productObj.category)} style={{display: "flex"}} >
 
         <h1> {productObj.category.charAt(0).toUpperCase() + productObj.category.slice(1)} </h1>
         <div style={{marginLeft: "auto"}}>Products: {Array.isArray(getAllProducts) ? getAllProducts.filter(e => e.category.includes(productObj.category)).length : 0} </div>
