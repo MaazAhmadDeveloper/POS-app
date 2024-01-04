@@ -1,20 +1,24 @@
-import { Table, Select, Button } from 'antd';
+import { Table, Select, Button, Modal, message } from 'antd';
 import { usePDF } from 'react-to-pdf';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, UploadOutlined, DownloadOutlined, CloudUploadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
 import Layout from '../../components/Layout'
 import Invoice from '../invoices/Invoice';
+import { useNavigate } from 'react-router-dom';
 
 const Reports = () => {
   const { toPDF, targetRef } = usePDF({filename: 'page.pdf',});
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [billsData, setBillsData] = useState([]);
   const [fullBillsData, setFullBillsData] = useState([]);
   const [slectedBills, setSlectedBills] = useState();
   const [productData, setProductData] = useState([]);
   const [popModal, setPopModal] = useState(false);
+  const [uploadModal, setUploadModal] = useState(false);
+  const [downloadModal, setDownloadModal] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
   
 
@@ -62,6 +66,13 @@ const Reports = () => {
   useEffect(() => {
       getAllBills();
       getAllProducts();
+
+      // if (fullBillsData.length === 0) {
+      //   const getAllDataFromBackup = async ()=>{
+      //     await axios.get('/api/userData/getdataBackup');
+      //   };
+      //   getAllDataFromBackup();
+      // }
   }, []);
 
   const columns = [
@@ -181,19 +192,43 @@ const Reports = () => {
     
   }
 
+  const uploadHandler = async ()=>{
+    const storage = localStorage.getItem('auth'); 
+    const parsedStorage = JSON.parse(storage);
+
+    try {
+      dispatch({
+        type: "SHOW_LOADING",
+      });
+      message.success("Wait for Backup !");
+        const response = await axios.post("/api/userData/dataBackup", parsedStorage );
+
+        if (response.data !== "out dated") {
+          window.location.href = "/reports";
+        } else {
+          localStorage.removeItem("auth");
+          message.error("Your account is out Dated contact with Admin!");
+          navigate("/login");
+        }
+    } catch (error) {
+      message.error("Ceck your Internet connection!");
+    }
+  }
+
   return (
     <Layout>
 
       <div style={{position: "relative"}}>
         <h2>Reports</h2>
         {/* onClick={() => setPopModal(true)} */}
-        <Button className='add-new' onClick={() => toPDF()} style={{position:"absolute", right: 10, zIndex: "1000", top: 55 }} >Download</Button>
+        <Button className='add-new' onClick={() => setDownloadModal(true)} style={{position:"absolute", right: 150, zIndex: "1000", top: 45, height:"40px", padding:5, width:120 }} >Download <DownloadOutlined style={{marginLeft:"15px"}} /> </Button>
+        <Button className='add-new' onClick={()=> setUploadModal(true)} style={{position:"absolute", right: 10, zIndex: "1000", top: 45, height:"40px", padding:5, width:120 }} >Upload <UploadOutlined /> </Button>
       </div>
 
       <div className="report-select-div">
                 <Select
                   placeholder="Date"
-                  style={{ width: 200, marginRight: 100 }}
+                  style={{ width: 200, marginRight: 70 }}
                   allowClear={true}
                   onChange={(value) => value === undefined? setBillsData(fullBillsData) :getFormattedDate(Number(value))}
                 >
@@ -204,11 +239,11 @@ const Reports = () => {
 
                 <Select
                   placeholder="Products"
-                  style={{ width: 200, marginRight: 100 }}
+                  style={{ width: 200, marginRight: 70 }}
                   allowClear={true}
                   onChange={(value) => value === undefined? setBillsData(fullBillsData) :  setSlectedBills({
                     type:"product",
-                    value
+                    value 
                   })}
                 >
                 {productData.map(product => (
@@ -218,7 +253,7 @@ const Reports = () => {
 
                 <Select
                   placeholder="Customers"
-                  style={{ width: 200, marginRight: 100 }}
+                  style={{ width: 200, marginRight: 70 }}
                   allowClear={true}
                   onChange={(value) => value === undefined? setBillsData(fullBillsData) :setSlectedBills({
                     type:"customers",
@@ -251,6 +286,21 @@ const Reports = () => {
           setPopModal={setPopModal}
             /> 
           }
+
+<Modal title="Upload" visible={uploadModal} onCancel={() => setUploadModal(false) } footer={false}>
+          <h3 style={{marginBottom: 50}}>Are you sure to upload all existing data to Cloud ---  <CloudUploadOutlined /> </h3>
+            <div style={{display: "flex"}}>
+                <Button className='upload-cancel' onClick={()=>{ setUploadModal(false)}}>Cancel</Button>
+                <Button className='upload-confirm' onClick={()=>{  setUploadModal(false); uploadHandler()  }}>Upload</Button>
+            </div>
+</Modal>
+<Modal title="Download" visible={downloadModal} onCancel={() => setDownloadModal(false) } footer={false}>
+          <h3 style={{marginBottom: 50}}>Are you sure to Download all existing data --- <CloudDownloadOutlined /> </h3>
+            <div style={{display: "flex"}}>
+                <Button className='upload-cancel' onClick={()=>{ setDownloadModal(false)}}>Cancel</Button>
+                <Button className='upload-confirm' onClick={()=>{  setDownloadModal(false); toPDF()}}>Download</Button>
+            </div>
+</Modal>
     </Layout>
   )
 }

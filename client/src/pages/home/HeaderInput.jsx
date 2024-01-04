@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function HeaderInput( {setSearchInput, searchInput } ) {
+function HeaderInput( {setSearchInput, searchInput, selectedCategory } ) {
   const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef();
@@ -23,7 +23,7 @@ function HeaderInput( {setSearchInput, searchInput } ) {
     return () => {
       document.removeEventListener('keypress', handleKeyPress);
     };
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <div>

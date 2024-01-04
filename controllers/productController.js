@@ -1,5 +1,6 @@
 import Product from "../models/productModel.js";
 import mongoose from "mongoose";
+import axios from "axios";
 
 //for add or fetch
 export const getProductController = async (req, res) => {
@@ -71,4 +72,4 @@ export const deleteProductController = async (req, res) => {
             console.log(error);
         }
     }
-}
+};

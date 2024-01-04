@@ -2,6 +2,7 @@ import Bills from "../models/billsModel.js";
 
 //for add or fetch
 export const getBillsController = async (req, res) => {
+
     try {
 
         const bills = await Bills.find().sort({ createdAt: -1 });
@@ -22,6 +23,6 @@ export const addBillsController = async (req, res) => {
             res.send("Bill Created Successfully!");
     
         } catch(error) {
-            console.log("error");
+            console.log("error", error.message);
         }
-}
+};

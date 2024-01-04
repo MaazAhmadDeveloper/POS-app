@@ -9,6 +9,9 @@ function Invoice( {selectedBill, popModal, setPopModal } ) {
         content: () => componentRef.current,
       });
 
+      useEffect(()=>{
+        console.log(selectedBill);
+      },[])
     const generateInvoiceClickHandle = ()=>{
         setPopModal(false);
         handlePrint();
@@ -40,7 +43,6 @@ useEffect(() => {
               setPopModal(false);
           }
     };
-      
     document.addEventListener('keypress', handleKeyPress);
       
         // Clean up the event listener when the component is unmounted
@@ -60,6 +62,17 @@ useEffect(() => {
                 <span>Number: <b>+92300000000</b></span>
                 <span>Address: <b> ABCD, EFGH, IJKL</b></span>
             </div>
+
+            <div className='order_waiter'>
+                <div>Order Type: &nbsp; <b> { selectedBill.orderType} </b></div>
+
+                { selectedBill.waiterName !== "-----" ?
+                    <div>Waiter: &nbsp; <b> { selectedBill.waiterName} </b></div>
+                :
+                    null
+                }
+            </div>
+
             <div className="cardBody">
                 <div className="group">
                     <span>Bill Number:</span>
@@ -108,6 +121,13 @@ useEffect(() => {
             <div className="cardHeader">
                 <h2 className="logo">For Shop</h2>
 
+            </div>
+            <div className='order_waiter'>
+                <div>Order Type: &nbsp; <b> { selectedBill.orderType} </b></div>
+                
+                { selectedBill.waiterName !== "-----" &&
+                        <div>Waiter: &nbsp; <b> { selectedBill.waiterName} </b></div>
+                    }
             </div>
             <div className="cardBody">
             <div className="group">

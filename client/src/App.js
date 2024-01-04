@@ -1,11 +1,9 @@
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import 'antd/dist/antd.min.css';
-import './App.css';
 import Home from './pages/home/Home';
 import Products from './pages/products/Products';
 import Cart from './pages/cart/Cart';
 import Login from './pages/login/Login';
-import Register from './pages/register/Register';
 import Reports from './pages/reports/Reports';
 import InvoicesRoute from './pages/invoices/InvoiceRoute';
 import Categories from "./pages/categories/Categories"
@@ -46,19 +44,23 @@ function App() {
             </ProtectedRouter>
             } />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </>
   );
-}
+};
 
 export default App;
 
 export function ProtectedRouter({children}) {
-  if(localStorage.getItem("auth")) {
-    return children;
-  } else {
-    return <Navigate to="/login" />
-  }
+
+const storage = localStorage.getItem('auth');
+const parsedStorage = JSON.parse(storage);
+
+if(parsedStorage !== null && parsedStorage !== undefined &&  parsedStorage.access === "allow") {
+  return children;
+} else {
+  return <Navigate to="/login" />
+};
+
 }

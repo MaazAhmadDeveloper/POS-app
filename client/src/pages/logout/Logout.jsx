@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { LogoutOutlined } from '@ant-design/icons';
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 function Logout({ collapsed }) {
     const [logoutModal, setLogoutModal] = useState(false)
     const navigate = useNavigate();
 
-  const handlerLogout = () => {
+  const handlerLogout = async () => {
+    const storage = localStorage.getItem('auth');
+    const parsedStorage = JSON.parse(storage)
+
+    try {
+      const {data} = await axios.post('http://16.171.43.209:3001/api/users/userlogout', parsedStorage);
+      console.log(data);
+      if (data === "User is not valid by admin") {
         localStorage.removeItem("auth");
-         navigate("/login");
+        message.error("This account is not valid by Admin");
+        navigate("/login");
+      }else if(data === "User Logout"){
+        localStorage.removeItem("auth");
+        message.success("Logout successFully");
+        navigate("/login");
+      };
+    } catch (error) {
+      message.error("Check your Internet Connection!");
+    }
   };
 
   return (

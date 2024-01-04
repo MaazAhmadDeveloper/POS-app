@@ -12,6 +12,7 @@
   "author": "amPhilip",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.2",
     "body-parser": "^1.20.0",
     "color": "^4.2.3",
     "concurrently": "^7.2.1",

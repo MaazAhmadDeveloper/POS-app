@@ -101,6 +101,7 @@ const Products = () => {
     }
   }
   const editProductHandle =(record)=>{
+    console.log(record);
     setEditProduct(record);
      setPopModal(true)
   }
@@ -140,7 +141,13 @@ const Products = () => {
   ]
 
   const handlerSubmit = async (value) => {
-    // console.log(value);
+
+    for (let key in value) {
+      if (value[key] === null || value[key] === undefined) {
+        return message.error("Full fill the form");
+      }
+    }
+
     if(editProduct === null) {
       try {
         dispatch({
@@ -260,7 +267,7 @@ const Products = () => {
               <Input/>
             </FormItem>
             <div className="form-btn-add">
-              <Button htmlType='submit' className='add-new'>Add</Button>
+              <Button htmlType='submit' className='add-new' >Add</Button>
             </div>
           </Form>
         </Modal>

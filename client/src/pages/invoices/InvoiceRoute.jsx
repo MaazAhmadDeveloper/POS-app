@@ -124,11 +124,11 @@ const InvoicesRoute = () => {
               type="text" 
               onChange={ e => setSearchInputValue(e.target.value) }
               value={searchInputValue}
-              placeholder= {selectedCategory === "Date" ? "DD/MM/YYYY" :  'Search Product' }
+              placeholder= {selectedCategory === "Date" ? "DD/MM/YYYY" :  'Search Invoice' }
               />
                 <Select
                   placeholder="Search Via"
-                  // defaultValue="Bill No."
+                  defaultValue="Bill No."
                   style={{ width: 200, marginLeft: 100 }}
                   onChange={(value) => setSelectedCategory(value)}
                 >

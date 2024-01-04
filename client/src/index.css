@@ -454,3 +454,36 @@ body::-webkit-scrollbar-thumb {
   background-color: white !important;
   color: #ff7f50 !important;
 }
+
+.upload-cancel{
+  border: none !important;
+  margin-left: auto;
+  background-color: #d63232 !important;
+  color: white !important;
+  box-shadow: 0 0 5px #d63232 !important;
+  transition: 0.5s !important;
+}
+.upload-cancel:hover{
+  background-color: white !important;
+  color: #d63232 !important;
+}
+.upload-confirm{
+  border: none !important;
+  margin: 0 20px;
+  background-color: #001e28 !important;
+  color: white !important;
+  box-shadow: 0 0 5px #001e28 !important;
+  transition: 0.5s !important;
+}
+.upload-confirm:hover{
+  background-color: white  !important;
+  color: #001e28 !important;
+}
+.order_waiter{
+  text-align: center;
+  color: grey;
+  margin-top: 15px;
+  width: 100%;
+  background-color: #fafafa;
+  border-radius: 5px;
+}

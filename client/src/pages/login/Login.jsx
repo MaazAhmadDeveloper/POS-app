@@ -16,27 +16,36 @@ const Login = () => {
       dispatch({
         type: "SHOW_LOADING",
       });
-      const res = await axios.post('/api/users/login', value);
+      const {data} = await axios.post('http://16.171.43.209:3001/api/users/checkusers', value);
+      console.log(data);
       dispatch({
-        type: "HIDE_LOADING",
+        type: "HIDE_LOADING", 
       });
-      message.success("User Login Successfully!");
-      localStorage.setItem("auth", JSON.stringify(res.data));
-      navigate("/");
       
+    if(data.access === "allow") {
+      localStorage.setItem('auth', JSON.stringify(data));
+      message.success("Welcome " + data.name + " to POS");
+      navigate("/");
+      }else if(data.access === "outdated"){
+        message.error("Please Contact with Admin this account is out dated!");
+      }else if(data.access === "not allow"){
+        message.error("This account is already Login on other device");
+      }
 
     } catch(error) {
       dispatch({
         type: "HIDE_LOADING",
       });
-      message.error("Error!")
+      message.error("Try Again Some thing went wrong!");
       console.log(error);
     }
   }
 
   useEffect(() => {
-    if(localStorage.getItem("auth")) {
-      localStorage.getItem("auth");
+    const storage = localStorage.getItem('auth');
+    const parsedStorage = JSON.parse(storage)
+
+    if(parsedStorage !== null && parsedStorage.access === "allow") {
       navigate("/");
     }
     
@@ -48,7 +57,10 @@ const Login = () => {
         <p>Login</p>
         <div className="form-group">
           <Form layout='vertical' onFinish={handlerSubmit}>
-            <FormItem name="userId" label="Email Address">
+            <FormItem name="userName" label="User Name">
+              <Input placeholder='User Name'/>
+            </FormItem>
+            <FormItem name="email" label="Email Address">
               <Input placeholder='Enter Email Address'/>
             </FormItem>
             <FormItem name="password" label="Password">
@@ -56,7 +68,6 @@ const Login = () => {
             </FormItem>
             <div className="form-btn-add">
               <Button htmlType='submit' className='add-new'>Login</Button>
-              <Link className='form-other' to="/register">Register Here!</Link>
             </div>
           </Form>
         </div>

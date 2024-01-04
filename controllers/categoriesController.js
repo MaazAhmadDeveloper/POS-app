@@ -1,4 +1,5 @@
 import Categories from "../models/categoriesModel.js";
+import axios from "axios";
 
 //for add or fetch
 export const getCategoriesController = async (req, res) => {
@@ -50,4 +51,4 @@ export const deleteCategoriesController = async (req, res) => {
         res.status(400).send(error);
         console.log(error);
     }
-}
+};
