@@ -9,24 +9,25 @@ function Logout({ collapsed }) {
     const navigate = useNavigate();
 
   const handlerLogout = async () => {
-    const storage = localStorage.getItem('auth');
-    const parsedStorage = JSON.parse(storage)
+    message.error("Sorry admin has permanently loged in you !")
+    // const storage = localStorage.getItem('auth');
+    // const parsedStorage = JSON.parse(storage)
 
-    try {
-      const {data} = await axios.post('http://16.171.43.209:3001/api/users/userlogout', parsedStorage);
-      console.log(data);
-      if (data === "User is not valid by admin") {
-        localStorage.removeItem("auth");
-        message.error("This account is not valid by Admin");
-        navigate("/login");
-      }else if(data === "User Logout"){
-        localStorage.removeItem("auth");
-        message.success("Logout successFully");
-        navigate("/login");
-      };
-    } catch (error) {
-      message.error("Check your Internet Connection!");
-    }
+    // try {
+    //   const {data} = await axios.post('http://16.171.43.209:3001/api/users/userlogout', parsedStorage);
+    //   console.log(data);
+    //   if (data === "User is not valid by admin") {
+    //     localStorage.removeItem("auth");
+    //     message.error("This account is not valid by Admin");
+    //     navigate("/login");
+    //   }else if(data === "User Logout"){
+    //     localStorage.removeItem("auth");
+    //     message.success("Logout successFully");
+    //     navigate("/login");
+    //   };
+    // } catch (error) {
+    //   message.error("Check your Internet Connection!");
+    // }
   };
 
   return (

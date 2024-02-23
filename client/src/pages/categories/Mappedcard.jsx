@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Card, message, Modal, Button} from 'antd';  
 
 
-function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal, getAllProducts, categoryClickHandle} ) {
+function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal, getAllProducts, categoryClickHandle, setSecretModal, secretAllow} ) {
     const dispatch = useDispatch();
     const [isOptionsVisible, setIsOptionsVisible] = useState(false);
     const [deleteModelPopUp, setDeleteModelPopUp] = useState(false);
@@ -45,13 +45,22 @@ function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal,
         setIsOptionsVisible(!isOptionsVisible);
       };
       const ClickOnEditHandle = ()=>{
-        setIsOptionsVisible(false)
-        setEditProduct(productObj);
-        setPopModal(true)
+        if (secretAllow) {
+          setIsOptionsVisible(false)
+          setEditProduct(productObj);
+          setPopModal(true)
+        }else{
+          setSecretModal(true);
+        }
       }
       const clickDeleteHandle = ()=>{
+
+      if (secretAllow) {
         setIsOptionsVisible(false)
         setDeleteModelPopUp(true)
+      }else{
+        setSecretModal(true);
+      }
       }
 
   return (
@@ -74,7 +83,6 @@ function Mappedcard( {productObj, getAllCategories, setEditProduct, setPopModal,
           <DeleteOutlined className='cart-action' onClick={isOptionsVisible && clickDeleteHandle }/>
            
            <EditOutlined className='cart-edit' onClick={isOptionsVisible && ClickOnEditHandle }/>
-           
           </div>
           
           {isOptionsVisible ? <DoubleRightOutlined className='doubleArrow' onClick={handleEllipsisClick }  /> : <DoubleLeftOutlined  className='doubleArrow' onClick={handleEllipsisClick} />}

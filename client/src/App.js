@@ -43,7 +43,7 @@ function App() {
               <Reports />
             </ProtectedRouter>
             } />
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
         </Routes>
       </Router>
     </>
@@ -54,13 +54,13 @@ export default App;
 
 export function ProtectedRouter({children}) {
 
-const storage = localStorage.getItem('auth');
-const parsedStorage = JSON.parse(storage);
+// const storage = localStorage.getItem('auth');
+// const parsedStorage = JSON.parse(storage);
 
-if(parsedStorage !== null && parsedStorage !== undefined &&  parsedStorage.access === "allow") {
+// if(parsedStorage !== null && parsedStorage !== undefined &&  parsedStorage.access === "allow") {
   return children;
-} else {
-  return <Navigate to="/login" />
-};
+// } else {
+//   return <Navigate to="/login" />
+// };
 
 }

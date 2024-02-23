@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import Mappedcard from './Mappedcard';
 import LayoutApp from '../../components/Layout';
+import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Form, Input, Modal, Select, Table, message } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import SelectedCategory from './SelectedCategory';
@@ -14,6 +15,9 @@ function Categories(  ) {
   const [popModal, setPopModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [secretInputValue, setSecretInputValue] = useState();
+  const [secretAllow, setSecretAllow] = useState(false);
+  const [secretModal, setSecretModal] = useState(false);
   const dispatch = useDispatch();
 
   const getAllCategories = async () => {
@@ -101,6 +105,18 @@ function Categories(  ) {
       }
     }
   }
+  const secretConfirmHandle = ()=>{
+    console.log("confirmed");
+    if (secretInputValue.toString() === "m@@X") {
+      setSecretAllow(true);
+      message.success("Your Product Sections Unlocked");
+      setSecretInputValue("");
+      setSecretModal(false);
+    }else{
+      setSecretModal(false);
+      message.error("Your secret key is incorrect");
+    }
+  }
 
   const categoryClickHandle = (category)=>{
     setSelectedCategory(category)
@@ -114,7 +130,8 @@ function Categories(  ) {
         
           <div className="products-top">
           <h2 style={{margin:0}} >All Caregories </h2>
-          <Button className='add-new' style={{position:"absolute", right: 0, zIndex: "1000", }}  onClick={() => setPopModal(true)}>Add New</Button>
+          <Button className='add-new' style={{position:"absolute", right: 0, zIndex: "1000", }}  onClick={() => secretAllow ? setPopModal(true): setSecretModal(true)}>Add New</Button>
+            {secretAllow ? <UnlockOutlined style={{marginLeft: "350px"}} onClick={ ()=> {setSecretAllow(false); setSecretInputValue("")} } />: <LockOutlined style={{marginLeft: "350px"}} onClick={ ()=> setSecretModal(true) } /> }
           </div>
           <h3>Total Products: { getAllProducts.length } </h3>
     
@@ -130,6 +147,8 @@ function Categories(  ) {
                           setPopModal={setPopModal}
                           getAllProducts={getAllProducts}
                           categoryClickHandle={categoryClickHandle}
+                          secretAllow={secretAllow}
+                          setSecretModal={setSecretModal}
                           />
                         </Col>
           )}
@@ -160,6 +179,21 @@ function Categories(  ) {
 
     />
     }
+          <Modal title={"Secret Key "} visible={secretModal} onCancel={() => {setSecretModal(false); setSecretInputValue("")}} footer={false}>
+        <h3 >Enter Secret Key here</h3>
+        <input 
+          type="password" 
+          className='secret-key-input' 
+          placeholder='Secret Key' 
+          style={{marginBottom: 50}}
+          onChange={ (e) => setSecretInputValue(e.target.value) }
+          value={secretInputValue}
+          />
+            <div style={{display: "flex"}}>
+                <Button className='cancel-category' onClick={()=>{ setSecretModal(false); setSecretInputValue("") }}>Cancel</Button>
+                <Button className='delete-category' onClick={secretConfirmHandle}>Cofirm</Button>
+            </div>
+      </Modal>
 
 
     </LayoutApp>

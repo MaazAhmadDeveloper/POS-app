@@ -193,26 +193,27 @@ const Reports = () => {
   }
 
   const uploadHandler = async ()=>{
-    const storage = localStorage.getItem('auth'); 
-    const parsedStorage = JSON.parse(storage);
+    message.error("Sorry this POS app is already live, you can only use upload feature if this app was in you local server!");
+    // const storage = localStorage.getItem('auth'); 
+    // const parsedStorage = JSON.parse(storage);
 
-    try {
-      dispatch({
-        type: "SHOW_LOADING",
-      });
-      message.success("Wait for Backup !");
-        const response = await axios.post("/api/userData/dataBackup", parsedStorage );
+    // try {
+    //   dispatch({
+      //     type: "SHOW_LOADING",
+      //   });
+      // message.success("Wait for Backup !");
+    //     const response = await axios.post("/api/userData/dataBackup", parsedStorage );
 
-        if (response.data !== "out dated") {
-          window.location.href = "/reports";
-        } else {
-          localStorage.removeItem("auth");
-          message.error("Your account is out Dated contact with Admin!");
-          navigate("/login");
-        }
-    } catch (error) {
-      message.error("Ceck your Internet connection!");
-    }
+    //     if (response.data !== "out dated") {
+    //       window.location.href = "/reports";
+    //     } else {
+    //       localStorage.removeItem("auth");
+    //       message.error("Your account is out Dated contact with Admin!");
+    //       navigate("/login");
+    //     }
+    // } catch (error) {
+    //   message.error("Check your Internet connection!");
+    // }
   }
 
   return (

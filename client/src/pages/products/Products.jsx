@@ -196,7 +196,7 @@ const Products = () => {
 
   const secretConfirmHandle = ()=>{
     console.log("confirmed");
-    if (secretInputValue.toString() === "123456") {
+    if (secretInputValue.toString() === "m@@X") {
       setSecretAllow(true);
       message.success("Your Product Sections Unlocked");
       setSecretInputValue("");
