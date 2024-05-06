@@ -13,8 +13,8 @@ import userDataRouter from './routes/userDataUploadRouter.js';
 dotenv.config();
 
 //Connect with MongoDB
-await mongoose.connect("mongodb+srv://user:user@posclient.lq5unfm.mongodb.net/?retryWrites=true&w=majority").then(() => {
-// await mongoose.connect("mongodb://0.0.0.0:27017/fivePOSdb").then(() => {
+// await mongoose.connect("mongodb+srv://user:user@posclient.lq5unfm.mongodb.net/?retryWrites=true&w=majority").then(() => {
+await mongoose.connect("mongodb://0.0.0.0:27017/fivePOSdb").then(() => {
     console.log("Connected to DB");
 }).catch((err) => {
     // console.log(err.message);

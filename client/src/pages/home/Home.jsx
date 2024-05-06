@@ -61,31 +61,31 @@ const getAllBills = async () => {
 };
 
 useEffect(() => {
-  // getAllBills();
+  getAllBills();
 }, []);
 
   useEffect(()=>{
     
-    // const storage = localStorage.getItem('auth');
-    // const parsedStorage = JSON.parse(storage);    
+    const storage = localStorage.getItem('auth');
+    const parsedStorage = JSON.parse(storage);    
 
-    // const initialDate = new Date(parsedStorage.createdAt);
-    // const checkAndReassignValue = () => {
-    //   console.log(parsedStorage);
+    const initialDate = new Date(parsedStorage.createdAt);
+    const checkAndReassignValue = () => {
+      console.log(parsedStorage);
         
-    //   const currentDate = new Date();
-    //   const timeElapsed = currentDate - initialDate;
-    //   const reassignmentDuration = (parsedStorage.time * 30 * 24 * 60 * 60 * 1000);
-    //   // const reassignmentDuration = (parsedStorage.time * 60 * 1000);
+      const currentDate = new Date();
+      const timeElapsed = currentDate - initialDate;
+      const reassignmentDuration = (parsedStorage.time * 30 * 24 * 60 * 60 * 1000);
+      // const reassignmentDuration = (parsedStorage.time * 60 * 1000);
     
-    //   if (timeElapsed >= reassignmentDuration) {
-    //     localStorage.removeItem("auth");
-    //     message.error("Your App is Out of dated");
-    //     navigate("/login");
-    //   };
-    // };
+      if (timeElapsed >= reassignmentDuration) {
+        localStorage.removeItem("auth");
+        message.error("Your App is Out of dated");
+        navigate("/login");
+      };
+    };
 
-    // checkAndReassignValue();
+    checkAndReassignValue();
 
     setProductData(fullProductData.filter((obj) => (obj.name.toString().toLowerCase().includes(searchInput.toLowerCase() ))));
 
